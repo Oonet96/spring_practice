@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.RequestUser;
-import com.example.demo.dto.ResponseUser;
+import com.example.demo.dto.user.RequestUser;
+import com.example.demo.dto.user.ResponseUser;
 import com.example.demo.service.UserManagementService;
 
 import lombok.RequiredArgsConstructor;

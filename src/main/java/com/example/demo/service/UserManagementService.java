@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dto.user.ResponseUser;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.dto.ResponseUser;
 
 import lombok.RequiredArgsConstructor;
 
