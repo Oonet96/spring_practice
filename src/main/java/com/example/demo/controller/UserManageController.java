@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("user")
@@ -30,13 +27,14 @@ public class UserManageController {
         userService.registerUser(dto.getUserId(),dto.getUserName(),dto.getUserPwd());
     }
 
+    // 로그인
     @PostMapping("login")
     public ResponseUser.Login PostUserLogin(@RequestBody RequestUser.Login dto){
-        userService.login(dto.getUserId(), dto.getUserPwd());
-        return new ResponseUser.Login(
-            true,"",
-            userService.getUserInfo(null, dto.getUserId())
-        );
+        return userService.login(dto.getUserId(), dto.getUserPwd());
+        // return new ResponseUser.Login(
+        //     true,"",
+        //     userService.getUserInfo(null, dto.getUserId())
+        // );
     }
     
     //유저 정보 수정

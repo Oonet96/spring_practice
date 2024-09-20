@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class ResponseUser {
@@ -34,7 +35,8 @@ public class ResponseUser {
         private String logText;
     }
     
-    @AllArgsConstructor
+    @Setter
+    @NoArgsConstructor
     public  static class Login{
         private boolean bSuccess;
         private String logText;
