@@ -37,10 +37,17 @@ public class ResponseUser {
     
     @Setter
     @NoArgsConstructor
-    public  static class Login{
+    public static class Login{
         private boolean bSuccess;
         private String logText;
         private ResponseUser.Info userInfo;
 
+    }
+
+    @Setter
+    @NoArgsConstructor
+    public static class CheckDuplicateIDResult{
+        private boolean bDuplicate;
+        private String logText;
     }
 }

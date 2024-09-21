@@ -9,6 +9,8 @@ import com.example.demo.service.UserManagementService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -61,5 +63,10 @@ public class UserManageController {
         return userInfo;
     }
     
-    
+    //아이디 중복 체크
+    @GetMapping("/checkDuplicate/{userId}")
+    public ResponseUser.CheckDuplicateIDResult GetCheckDuplicateIDResult(@PathVariable String userId){
+        return userService.checkDuplicateID(userId);
+    }
+
 }

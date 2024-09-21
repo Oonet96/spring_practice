@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.user.ResponseUser;
+import com.example.demo.dto.user.ResponseUser.CheckDuplicateIDResult;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
@@ -20,7 +21,10 @@ public class UserManagementService {
     private final UserRepository userRepo;
 
     public void registerUser(String userId, String userName, int userPwd){
-        userRepo.save(new User(userId,userName,userPwd));
+        Optional<User> optTemp = userRepo.findByUserId(userId);
+
+        if(optTemp.isEmpty())
+            userRepo.save(new User(userId,userName,userPwd));
     }
 
     //비밀번호 해시값으로 저장해두고, 가져와서 비교 할것
@@ -91,5 +95,20 @@ public class UserManagementService {
         return bSelf 
             ? new ResponseUser.SelfInfo(tmpData.getUserId(),tmpData.getUserName(),tmpData.getWinCount(),tmpData.getLoseCount(),"success") 
             : new ResponseUser.OtherInfo(tmpData.getUserName(), tmpData.getWinCount(), tmpData.getLoseCount(), "success");
+    }
+
+    public CheckDuplicateIDResult checkDuplicateID(String userId){
+        Optional<User> optTemp = userRepo.findByUserId(userId);
+
+        CheckDuplicateIDResult resData = new CheckDuplicateIDResult();
+        resData.setBDuplicate(true);
+        resData.setLogText("중복된 아이디입니다.");
+
+        if(optTemp.isEmpty()){
+            resData.setBDuplicate(false);
+            resData.setLogText(userId+" - 사용 가능합니다.");
+        }
+        
+        return resData;
     }
 }
