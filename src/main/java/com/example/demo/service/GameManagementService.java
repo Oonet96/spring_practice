@@ -16,43 +16,58 @@ import lombok.Setter;
 public class GameManagementService {
 
     @Getter
-    public class GameRoomInfo{
-        private int entryCode = 0;
-        private int playerNo1 = 0;
+    private class GameRoomInfo{
+        private int entryCode;
+        private String userId1;
 
         @Setter
-        private int playerNo2 = 0;
+        private String userId2;
         
-        private String roomText = null;
+        private String roomText;
 
         @Setter
-        private boolean isEnd = false;
+        private int[] userBallArr1;
+        @Setter
+        private int[] userBallArr2;
 
-        public GameRoomInfo(int entryCode,int player1, String roomText){
+    
+        private enum roomState{
+            created,
+            userEnter,
+            started,
+            end
+        };
+
+        @Setter
+        private roomState enumState = roomState.created;
+
+        public GameRoomInfo(int entryCode,String userId, String roomText){
             this.entryCode = entryCode;
-            this.playerNo1 = player1;
-            this.playerNo2 = 0;
+            this.userId1 = userId;
+            this.userId2 = null;
             this.roomText = roomText;
-            this.isEnd = false;
+            this.userBallArr1 = null;
+            this.userBallArr2 = null;
+            enumState = roomState.created;
         }
     }
 
-    Map<Integer,GameRoomInfo> m_dicRoom = new HashMap<Integer,GameRoomInfo>();
+    private Map<Integer,GameRoomInfo> m_dicRoom = new HashMap<Integer,GameRoomInfo>();
 
     //Public
-    public Map<Integer,GameRoomInfo> CreateGame(int entryCode,int userNo,String roomText){
+    public Map<Integer,GameRoomInfo> CreateGame(int entryCode,String userId,String roomText){
         
-        createGame(entryCode,userNo,roomText);
+        createGame(entryCode,userId,roomText);
         
         return getGameRoom();
     }
 
-    public void JoinGame(int entryCode,int userNo){
-        joinGame(entryCode,userNo);
+    public void JoinGame(int entryCode,String userId){
+        joinGame(entryCode,userId);
     }
 
-    public Map<Integer,GameRoomInfo> GetGameRoom(){
-       return getGameRoom();
+    public void StartGame(int entryCode){
+        startGame(entryCode);
     }
 
     public void EndGame(int entryCode){
@@ -62,10 +77,14 @@ public class GameManagementService {
     public void GetGameState(int entryCode){
 
     }
+
+    public Map<Integer,GameRoomInfo> GetGameRoom(){
+        return getGameRoom();
+    }
     //Public End
 
     //private
-    private void createGame(int entryCode,int userNo,String roomText){
+    private void createGame(int entryCode,String userId,String roomText){
         
         Set<Integer> temp = m_dicRoom.keySet();
         Iterator<Integer> entryCodes = temp.iterator();
@@ -77,16 +96,25 @@ public class GameManagementService {
             }
         }
 
-        m_dicRoom.put(entryCode,new GameRoomInfo(entryCode, userNo, roomText));
+        m_dicRoom.put(entryCode,new GameRoomInfo(entryCode, userId, roomText));
     }
 
+    private void joinGame(int entryCode,String userId){
+        if(m_dicRoom.containsKey(entryCode)){
+            m_dicRoom.get(entryCode).setUserId2(userId);
+            m_dicRoom.get(entryCode).setEnumState(GameRoomInfo.roomState.userEnter);
+        }
+    }
+
+    private void startGame(int entryCode){
+        if(m_dicRoom.containsKey(entryCode)){
+            m_dicRoom.get(entryCode).setEnumState(GameRoomInfo.roomState.started);
+        }
+    
+    }
+    
     private Map<Integer,GameRoomInfo> getGameRoom(){
         return m_dicRoom;
-    }
-
-    private void joinGame(int entryCode,int userNo){
-        if(m_dicRoom.containsKey(entryCode))
-            m_dicRoom.get(entryCode).setPlayerNo2(userNo);
     }
     //private end
 }
