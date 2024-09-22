@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 
 @Service
-@Component
 @RequiredArgsConstructor
 public class UserManagementService {
 
