@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.service.GameManagementService;
+import com.example.demo.service.game.GameManagementService;
 
 import lombok.RequiredArgsConstructor;
 
