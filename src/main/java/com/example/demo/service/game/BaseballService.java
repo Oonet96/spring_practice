@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Component
 @RequiredArgsConstructor
-public class BaseBallService {
+public class BaseballService {
 	
     private void decideResult(int iBallNumber, Character offensePlayer, Character defendPlayer) {
 		int[] iPlayerNumArr = getNumberArray(defendPlayer.getBallNumber());
